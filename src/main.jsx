@@ -4,6 +4,8 @@ import './index.css'
 import App from './App'
 import store from './app/store'
 import { Provider } from 'react-redux'
+// import store from './redux/store'
+import demo from '../components/demo'
 
 // As of React 18
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -11,5 +13,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>
     <App />
+    <demo />
   </Provider>,
 )
