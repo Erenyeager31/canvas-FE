@@ -1,9 +1,11 @@
 import React from 'react'
 
-export default function demo() {
+const demo = () => {
   return (
     <div>
-      Ankit poriya
+      Ankit
     </div>
   )
 }
+
+export default demo
