@@ -22,6 +22,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+    <>
     <div>
       <nav className="flex items-center justify-between h-16 px-6 bg-white shadow-lg shadow-purple-500/50">
         <span className="text-2xl font-bold text-purple-700">CANVAS</span>
@@ -102,6 +103,7 @@ const Navbar = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
