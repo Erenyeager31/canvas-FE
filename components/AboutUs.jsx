@@ -22,15 +22,17 @@ const AboutUs = () => {
       {/* Meet the Team Section */}
       <section>
         <h2 className="text-xl sm:text-2xl font-semibold text-purple-700 mb-6">Meet the Team</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 ">
           {teamMembers.map((member, index) => (
-            <div
+           <div className=''>
+           <div
               key={index}
-              className="flex flex-col items-center bg-gray-200 rounded-lg h-48 sm:h-56 p-4"
+              className="flex flex-col items-center bg-gray-200 rounded-lg h-48 sm:h-56 p-4 "
             >
               <div className="h-24 w-24 bg-gray-300 rounded-full mb-4"></div>
               <h3 className="font-semibold text-lg">{member.name}</h3>
               <p className="text-gray-600 text-sm">{member.role}</p>
+            </div>
             </div>
           ))}
         </div>
