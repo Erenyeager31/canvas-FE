@@ -29,7 +29,7 @@ const ContactUs = () => {
           className="w-full text-center flex-grow flex items-center justify-center text-white text-4xl font-bold tracking-wide rounded-3xl"
           style={{
             backgroundColor: "#6A3A9F",
-            fontFamily: "'Poppins', sans-serif",
+            fontFamily: "'Caveat', cursive",
             height: "40vh", // Cover half the vertical height
           }}
         >

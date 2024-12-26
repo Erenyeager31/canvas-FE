@@ -7,7 +7,9 @@ const Generator_Step_1 = () => {
       <div className="min-h-screen white">
         <div className="bg-white w-full h-full">
           <div className="p-6 space-y-4 bg-[#D9D9D9] rounded-3xl">
-            <h1 className="text-xl md:text-2xl font-semibold text-[#6A3A9F] bg-[#D9D9D9]">
+            <h1 className="text-xl md:text-2xl font-semibold text-[#6A3A9F] bg-[#D9D9D9]"
+            style={{fontFamily: "'Caveat', cursive"}}
+            >
               AI Video Generator
             </h1>
             <p className="text-gray-600 text-sm md:text-base bg-[#D9D9D9]">

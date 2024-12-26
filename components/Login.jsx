@@ -18,7 +18,9 @@ function Login() {
       <div className=" mx-4 mt-16">
         <div className="bg-[#6A3A9F] flex items-center justify-center mt-[11rem] bg-white">
           <div className="bg-[#6A3A9F] text-white p-8 rounded-tr-[4rem] rounded-bl-[4rem] w-full max-w-md">
-            <h2 className=" bg-[#6A3A9F] text-[2.5rem] font-bold text-center mb-6">
+            <h2 className=" bg-[#6A3A9F] text-[2.5rem] font-bold text-center mb-6"
+            style={{fontFamily: "'Caveat', cursive"}}
+            >
               Login
             </h2>
             <form className=" bg-[#6A3A9F] space-y-4">
