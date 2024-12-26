@@ -25,7 +25,7 @@ const Navbar = () => {
     <>
     <div>
       <nav className="flex items-center justify-between h-16 px-12 bg-white shadow-lg shadow-purple-500/75">
-        <span className="text-2xl font-bold text-purple-700">CANVAS</span>
+        <span className="text-2xl font-bold text-[#6A3A9F]">CANVAS</span>
         <button
           className="flex flex-col justify-center items-center p-2 transition-transform transform hover:scale-150"
           onClick={() => setMenuOpen(!menuOpen)}
