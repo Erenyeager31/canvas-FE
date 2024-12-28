@@ -19,7 +19,7 @@ const Generator_Step_1 = () => {
             <input
               type="text"
               placeholder="What script do you want to generate?"
-              className="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none"
+              className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none"
             />
             <button className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ">
               Generate
@@ -27,7 +27,7 @@ const Generator_Step_1 = () => {
             <textarea
               placeholder="Result"
               rows="10"
-              className="w-full border border-gray-300 rounded-2xl px-4 py-2 focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none"
+              className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none"
             ></textarea>
             <button className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ">
               Next Step

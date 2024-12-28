@@ -23,7 +23,7 @@ const Navbar = () => {
 
   return (
     <>
-    <div>
+    <div className='sticky top-0'>
       <nav className="flex items-center justify-between h-16 px-12 bg-white shadow-lg shadow-purple-500/75">
         <span className="text-2xl font-bold text-[#6A3A9F]" style={{fontFamily: "'Caveat', cursive"}}>CANVAS</span>
         <button
