@@ -30,7 +30,7 @@ const Video_Cards = () => {
             <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2 text-center">
               <p className="bg-[#6A3A9F]">
                 Lorem ipsum odor amet, consectetuer adipiscing elit. Varius
-                etiam pulvinar{" "}
+                etiam pulvinar
               </p>
             </div>
           </div>

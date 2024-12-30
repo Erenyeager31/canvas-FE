@@ -19,7 +19,7 @@ const AboutUs = () => {
             <h2 className="text-xl sm:text-2xl font-semibold text-[#6A3A9F] mb-4">
               About
             </h2>
-            <div className="bg-[#D9D9D9] rounded-lg h-48 sm:h-64"></div>
+            <div className="bg-[#D9D9D9] rounded-3xl h-48 sm:h-64"></div>
           </section>
 
           {/* Meet the Team Section */}
@@ -32,7 +32,7 @@ const AboutUs = () => {
                 <div className="">
                   <div
                     key={index}
-                    className="flex flex-col items-center bg-[#D9D9D9] rounded-lg h-48 sm:h-56 p-4 "
+                    className="flex flex-col items-center bg-[#D9D9D9] rounded-3xl h-48 sm:h-56 p-4 "
                   >
                     <div className="h-24 w-24 bg-gray-100 rounded-full mb-4"></div>
                     <h3 className="font-semibold text-lg bg-[#D9D9D9]">{member.name}</h3>
