@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Video_Cards from "../components/Video_Cards.jsx";
+import { Link } from "react-router-dom";
 const Generator_Step_3 = () => {
   return (
     <>
@@ -26,6 +27,13 @@ const Generator_Step_3 = () => {
                 Generate
               </button>
               <Video_Cards></Video_Cards>
+
+              <div className="mt-2 bg-[#D9D9D9] flex space-x-4">
+              <Link to="/generator-step-4" className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ">
+                Next Step
+              </Link>
+              </div>
+
             </div>
           </div>
         </div>

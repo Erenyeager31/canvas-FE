@@ -1,6 +1,6 @@
 import React from "react";
 import VideoSettings from "../components/VideoSettings.jsx";
-
+import { Link } from "react-router-dom";
 const Generator_Step_2 = () => {
   return (
     <>
@@ -27,9 +27,11 @@ const Generator_Step_2 = () => {
                 Please select from the following options for generating video :
               </p>
               <VideoSettings></VideoSettings>
-              <button className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ">
+              <div className="mt-2 bg-[#D9D9D9] flex space-x-4">
+              <Link to="/generator-step-3" className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ">
                 Next Step
-              </button>
+              </Link>
+              </div>
             </div>
           </div>
         </div>

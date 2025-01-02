@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "../components/NavBar.jsx";
+import Footer from "../components/Footer.jsx";
 
 const AboutUs = () => {
   const teamMembers = [
@@ -44,6 +44,7 @@ const AboutUs = () => {
           </section>
         </div>
       </div>
+      {/* <Footer></Footer> */}
     </>
   );
 };

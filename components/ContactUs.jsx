@@ -18,7 +18,7 @@
 //     ASK A QUESTION?
 //   </div>
 import React from "react";
-
+import Footer from "../components/Footer.jsx";
 const ContactUs = () => {
   return (
     <>
@@ -116,6 +116,7 @@ const ContactUs = () => {
         </div>
       </div>
       </div>
+      {/* <Footer></Footer> */}
     </>
   );
 };

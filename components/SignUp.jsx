@@ -11,7 +11,7 @@
 // export default SignUp;
 
 import React from "react";
-
+import { Link } from "react-router-dom";
 function SignUp() {
   return (
     <>
@@ -150,12 +150,12 @@ function SignUp() {
             </form>
             <p className=" bg-[#6A3A9F] mt-4 text-center text-sm italic">
               Already have an account?{" "}
-              <a
-                href="#"
+              <Link
+                to="/login"
                 className=" bg-[#6A3A9F] text-blue-400 underline hover:text-gray-300"
               >
                 Login
-              </a>
+              </Link>
             </p>
           </div>
         </div>
