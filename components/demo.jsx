@@ -4,19 +4,7 @@ const demo = () => {
   return (
     <div>
       Ankit
-      Ankit
-      Ankit
 
-      Ankit
-      Ankit
-      Ankit
-      Ankit
-      Ankit
-      Ankit
-      Ankit
-      Ankit
-      Ankit
-      Ankit
       
     </div>
   )
