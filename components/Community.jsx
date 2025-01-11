@@ -29,9 +29,11 @@ const Community = () => {
     <div className="mt-20 bg-white p-8 md:p-16 text-center">
          <motion.h1
       className="text-4xl md:text-6xl font-bold mb-8 text-[#6A3A9F]"  // Adjusted size
+      style={{ fontFamily: "'Caveat', cursive" }}
       initial={{ opacity: 0, x: -100 }}  // Starting state for animation
       animate={{ opacity: 1, x: 0 }}     // Final state for animation
       transition={{ duration: 1 }}        // Animation duration
+      
     >
       The Only Community of Creators & Pros You Will Ever Need
     </motion.h1>
@@ -99,7 +101,7 @@ const Community = () => {
 
       </div>
       <button className="bg-[#6A3A9F] text-white px-6 py-3 rounded-full text-sm md:text-base hover:bg-purple-600 transition-transform transform hover:scale-105">
-        Join Community on Slack
+        Join Community on Canvas
       </button>
     </div>
     </>

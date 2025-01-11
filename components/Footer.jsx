@@ -44,19 +44,6 @@
 
 // export default Footer;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // code with animation
 
 import React from "react";
@@ -99,9 +86,9 @@ const Footer = () => {
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.8 }}
                 >
-                  
+                  <div className="bg-[#6A3A9F]">
                     <motion.div
-
+                      className="bg-[#6A3A9F]"
                       whileHover={{ scale: 1.05 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
@@ -111,8 +98,8 @@ const Footer = () => {
                       >
                         CREATE VIDEO
                       </Link>
-                    </motion.div>
-                
+                    </motion.div>{" "}
+                  </div>
                 </motion.div>
               </div>
             </div>

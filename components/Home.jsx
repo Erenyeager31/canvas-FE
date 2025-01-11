@@ -66,10 +66,10 @@ const Home = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-[#6A3A9F]">
+          <h1 className="text-4xl md:text-6xl font-bold text-[#6A3A9F]" style={{ fontFamily: "'Caveat', cursive" }}>
             The fastest way to create short video
           </h1>
-          <p className="mt-4 text-lg md:text-xl">
+          <p className="mt-4 text-lg md:text-xl" >
             Canvas is an AI-powered tool that generates high-quality videos from
             a simple description.
           </p>
