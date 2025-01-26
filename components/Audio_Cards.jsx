@@ -115,10 +115,10 @@ const Audio_Cards = () => {
   const [currentAudio, setCurrentAudio] = useState(null);
 
   const audioSamples = [
-    { src: '/audio/audio1.mp3', title: 'Sample 1' },
-    { src: '/audio/audio1.mp3', title: 'Sample 2' },
-    { src: '/audio/audio1.mp3', title: 'Sample 3' },
-    { src: '/audio/audio1.mp3', title: 'Sample 4' },
+    { src: '/', title: 'Sample 1' },
+    { src: '/', title: 'Sample 2' },
+    { src: '/', title: 'Sample 3' },
+    { src: '/', title: 'Sample 4' },
   ];
 
   const handleSelect = (index) => {

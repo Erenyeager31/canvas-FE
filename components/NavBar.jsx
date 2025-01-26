@@ -58,7 +58,7 @@ const Navbar = () => {
 
         {menuOpen && (
           // <div className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg border-l transition-transform transform translate-x-0">
-          <div ref={menuRef} className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg border-l transition-transform transform translate-x-0 rounded-tl-xl rounded-bl-xl ">
+          <div ref={menuRef} className="fixed top-0 right-0 h-full w-64 bg-white shadow-lg border-l transition-transform transform translate-x-0 rounded-tl-xl rounded-bl-xl z-50">
             <button
               className="self-end p-4 text-4xl transition-transform transform hover:scale-150"
               onClick={() => setMenuOpen(false)}

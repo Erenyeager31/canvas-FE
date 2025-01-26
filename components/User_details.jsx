@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 const User_Details = () => {
   return (
     <>
       <div className=" mx-4 mt-6">
         <div className="min-h-screen white">
           <div className="bg-white w-full h-full">
-            <div className="p-6 space-y-4 bg-[#D9D9D9] rounded-3xl">
+            <motion.div className="p-6 space-y-4 bg-[#D9D9D9] rounded-3xl"
+                          initial={{ y: -50, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ type: "spring", stiffness: 100, duration: 0.6 }}>
               <div className="flex h-[750px] bg-[#D9D9D9]">
                 {/* Sidebar */}
                 <div className="w-1/4 bg-[#6A3A9F] p-8 text-white flex flex-col rounded-3xl ">
@@ -169,7 +173,7 @@ const User_Details = () => {
                   </h1>
                   <div className="grid grid-cols-2 gap-10 bg-[#D9D9D9]">
                     {/* Profile Form */}
-                    <div className="flex flex-col bg-[#D9D9D9]">
+                    <div className="flex flex-col bg-[#D9D9D9] ">
                       <label
                         className="mb-1 text-gray-600 bg-[#D9D9D9]"
                         htmlFor="first-name"
@@ -179,7 +183,7 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="first-name"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105 "
                         placeholder="Name"
                       />
                     </div>
@@ -194,7 +198,7 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="last-name"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="Surname"
                       />
                     </div>
@@ -208,7 +212,7 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="username"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="Username"
                       />
                     </div>
@@ -222,7 +226,7 @@ const User_Details = () => {
                       <input
                         type="email"
                         id="email"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="mail@example.com"
                       />
                     </div>
@@ -236,7 +240,7 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="personal-phone"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="+380 44 123 45 67"
                       />
                     </div>
@@ -250,7 +254,7 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="work-phone"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="+380 44 123 45 67"
                       />
                     </div>
@@ -264,7 +268,7 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="country-city"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="Ukraine, Kyiv"
                       />
                     </div>
@@ -278,14 +282,22 @@ const User_Details = () => {
                       <input
                         type="text"
                         id="organization"
-                        className="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2"
+                        className="p-3 border rounded-3xl focus:outline-none focus:ring-2 focus:ring-[#6A3A9F] focus:ring-offset-2 transition-transform transform hover:scale-105"
                         placeholder="Organization name"
                       />
                     </div>
                   </div>
+                  <div className="mt-8 bg-[#D9D9D9] flex justify-center">
+                    <button
+                      type="submit"
+                      className="w-1/3 bg-[#6A3A9F] text-white py-2 rounded-full hover:bg-purple-600 transition-transform transform hover:scale-105"
+                    >
+                      Update
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
