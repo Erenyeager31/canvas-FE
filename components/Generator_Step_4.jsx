@@ -95,13 +95,13 @@ const Generator_Step_4 = () => {
                 Step 4 : Generate audio for the Generated Video
               </p>
 
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
               >
                 <Video_Cards />
-              </motion.div>
+              </motion.div> */}
 
               <motion.button
                 className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"

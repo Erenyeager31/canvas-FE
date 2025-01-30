@@ -128,9 +128,11 @@
 // export default Generator_Step_1;
 
 // integration
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { BaseUrl } from "../src/utils/BaseUrls.js";
 import Generator_Step_2 from "../components/Generator_Step_2.jsx";
 
 const Generator_Step_1 = () => {
@@ -148,7 +150,7 @@ const Generator_Step_1 = () => {
     setIsLoading(true);
     try {
       // Example API call (replace with your actual endpoint)
-      const response = await fetch("http://localhost:3000/generate-script", {
+      const response = await fetch(`${BaseUrl}/api/newScript`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,11 +159,11 @@ const Generator_Step_1 = () => {
       });
       const data = await response.json();
       // Store data.story in localStorage
-      if (data.story) {
-        localStorage.setItem("generatedScript", data.story);
-      }
-      setResult(data.story || "No script generated."); // Update result
-      console.log(data.story);
+      // if (data.generated_text) {
+      //   localStorage.setItem("generatedScript", data.generated_text);
+      // }
+      setResult(data.generated_text || "No script generated."); // Update result
+      console.log(data.generated_text);
     } catch (error) {
       console.error("Error generating script:", error);
       setResult("Failed to generate script. Please try again.");
@@ -219,7 +221,7 @@ const Generator_Step_1 = () => {
               >
                 {isLoading ? "Generating..." : "Generate"}
               </motion.button>
-              <motion.textarea
+              {/* <motion.textarea
                 placeholder="Result"
                 rows="10"
                 value={result}
@@ -228,13 +230,36 @@ const Generator_Step_1 = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
+              ></motion.textarea> */}
+              <motion.textarea
+                placeholder="Result"
+                rows="10"
+                value={result}
+                onChange={(e) => setResult(e.target.value)} // Allow user to edit the result
+                className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
               ></motion.textarea>
 
               <div className="mt-2 bg-[#D9D9D9] flex space-x-4">
-                <Link
+                {/* <Link
                   to={{
+      
                     pathname: "/generator-step-2",
                     // state: { story: data.story }, // Pass the story here
+                  }}
+                  className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                >
+                  Next Step
+                </Link> */}
+
+                <Link
+                  to="/generator-step-2"
+                  onClick={() => {
+                    if (result.trim()) {
+                      localStorage.setItem("generatedScript", result);
+                    }
                   }}
                   className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
                 >
