@@ -23,7 +23,7 @@
 //                   />
 //                 </svg>
 //               </div> */}
-              
+
 //               {/* Add any content like an image or a video preview here */}
 //               <span className="text-gray-400">Preview Area</span>
 //             </div>
@@ -42,13 +42,6 @@
 // };
 
 // export default Video_Cards;
-
-
-
-
-
-
-
 
 // import React, { useState } from "react";
 
@@ -108,16 +101,6 @@
 
 // export default Video_Cards;
 
-
-
-
-
-
-
-
-
-
-
 // import React, { useState } from "react";
 
 // const Video_Cards = ({ items = ["","","","","",""] }) => {
@@ -145,9 +128,9 @@
 //             className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
 //           >
 //             <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
-//               <img 
-//                 src={item.imageUrl || "default image"} 
-//                 alt="Preview" 
+//               <img
+//                 src={item.imageUrl || "default image"}
+//                 alt="Preview"
 //                 className="h-full w-full object-cover rounded-3xl"
 //               />
 //             </div>
@@ -180,15 +163,6 @@
 
 // export default Video_Cards;
 
-
-
-
-
-
-
-
-
-
 // import React, { useState, useEffect } from "react";
 // // import fetch from "fetch";
 // import { BaseUrl } from "../src/utils/BaseUrls";
@@ -207,7 +181,7 @@
 //         // First API Call: Send generatedScript and get prompts
 //         const promptResponse = await fetch.post(`${BaseUrl}/api/prompts`, { story: generatedScript });
 //         const prompts = promptResponse.data.prompts || [];
-        
+
 //         // Store prompts in localStorage
 //         localStorage.setItem("videoPrompts", JSON.stringify(prompts));
 
@@ -251,9 +225,9 @@
 //             className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
 //           >
 //             <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
-//               <img 
-//                 src={item.imageUrl || "default image"} 
-//                 alt="Preview" 
+//               <img
+//                 src={item.imageUrl || "default image"}
+//                 alt="Preview"
 //                 className="h-full w-full object-cover rounded-3xl"
 //               />
 //             </div>
@@ -285,18 +259,6 @@
 // };
 
 // export default Video_Cards;
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState } from "react";
 
@@ -358,13 +320,19 @@
 
 
 
-import React, { useEffect, useState } from "react";
 
+
+
+
+
+
+
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 const Video_Cards = () => {
   const [videoItems, setVideoItems] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const itemsPerPage = 4;
-
 
   const loadVideoItems = () => {
     const storedItems = localStorage.getItem("videoItems");
@@ -403,27 +371,48 @@ const Video_Cards = () => {
   return (
     <div className="w-full bg-[#D9D9D9] p-6">
       {videoItems.length === 0 ? (
-        <p className="text-center text-gray-500">No video items generated yet.</p>
+        <p className="text-center text-gray-500">
+          No video items generated yet.
+        </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#D9D9D9]">
-          {videoItems.slice(startIndex, startIndex + itemsPerPage).map((item, index) => (
-            <div key={index} className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col">
-              <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
-                <img src={item?.imageUrl || "default image"} alt="Preview" className="h-full w-full object-cover rounded-3xl" />
+          {videoItems
+            .slice(startIndex, startIndex + itemsPerPage)
+            .map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
+              >
+                <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
+                  <img
+                    src={item?.imageUrl || "default image"}
+                    alt="Preview"
+                    className="h-full w-full object-cover rounded-3xl"
+                  />
+                </div>
+                <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2 text-center">
+                  <p className="bg-[#6A3A9F]">
+                    {item.description || "Default Description"}
+                  </p>
+                </div>
               </div>
-              <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2 text-center">
-                <p className="bg-[#6A3A9F]">{item.description || "Default Description"}</p>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
 
       <div className="flex justify-between mt-6 bg-[#D9D9D9]">
-        <button onClick={handlePrev} disabled={startIndex === 0} className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">
+        <button
+          onClick={handlePrev}
+          disabled={startIndex === 0}
+          className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white rounded disabled:opacity-50 transition transition-transform transform hover:scale-105"
+        >
           Previous
         </button>
-        <button onClick={handleNext} disabled={startIndex + itemsPerPage >= videoItems.length} className="px-4 py-2 bg-gray-700 text-white rounded disabled:opacity-50">
+        <button
+          onClick={handleNext}
+          disabled={startIndex + itemsPerPage >= videoItems.length}
+          className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white rounded disabled:opacity-50 transition transition-transform transform hover:scale-105"
+        >
           Next
         </button>
       </div>
