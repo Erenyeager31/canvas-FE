@@ -129,25 +129,63 @@
 
 // integration
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { BaseUrl } from "../src/utils/BaseUrls.js";
-import Generator_Step_2 from "../components/Generator_Step_2.jsx";
+import uploadFile from "../src/utils/cloudinaryUploader.js";
+// import Generator_Step_2 from "../components/Generator_Step_2.jsx";
 
 const Generator_Step_1 = () => {
   const [inputText, setInputText] = useState(""); // For managing input text
   const [result, setResult] = useState(""); // For managing API response
   const [isLoading, setIsLoading] = useState(false); // For managing loading state
+  const [isActive, setIsActive] = useState(false);
+  const [fileURL, setURL] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // setSelectedFile(file);
+      handleFileUpload(file);
+    }
+  };
+
+  const toggleRadio = () => {
+    setURL(null)
+    setIsActive(prevState => !prevState)
+  }
+
+  const handleFileUpload = async (file) => {
+    try {
+      const url = await uploadFile(file)
+      setURL(url)
+      alert("File Uploaded Successfully !")
+
+      console.log("Upload successful");
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
 
   // Function to handle API call
   const handleGenerate = async () => {
+    if (isActive) {
+      if (fileURL == null) {
+        alert("Please upload a file or toggle the uploader");
+      }
+    }
     console.log(inputText);
     if (!inputText.trim()) {
       alert("Please enter a topic to generate the script!");
       return;
     }
     setIsLoading(true);
+
+    const payload = { topic: inputText, userDocURL: fileURL }
+    console.log(payload)
+    setURL(null)
+
     try {
       // Example API call (replace with your actual endpoint)
       const response = await fetch(`${BaseUrl}/api/newScript`, {
@@ -155,7 +193,7 @@ const Generator_Step_1 = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ topic: inputText }),
+        body: JSON.stringify(payload),
       });
       const data = await response.json();
       // Store data.story in localStorage
@@ -221,6 +259,44 @@ const Generator_Step_1 = () => {
               >
                 {isLoading ? "Generating..." : "Generate"}
               </motion.button>
+
+              <div className="p-4 rounded-lg w-fit flex flex-col items-center justify-center shadow-md">
+                {/* Toggle Switch */}
+                <div className="w-[300px] flex justify-center align-middle">
+                  <div
+                    className="w-12 h-6 mr-[40px] bg-gray-300 rounded-full p-1 cursor-pointer relative flex items-center transition-all duration-300"
+                    onClick={toggleRadio}
+                  >
+                    <div
+                      className={`absolute w-4 h-4 bg-[#6A3A9F] rounded-full shadow-md transition-all duration-300 
+                                ${isActive ? 'translate-x-6' : 'translate-x-0'}`}
+                    />
+                  </div>
+                  <p className="text-center font-semibold bg-none">
+                    {isActive ?
+                      <p className="ml-[55px] text-green-600">Upload a document</p>
+                      :
+                      <p className="text-red-800">Toggle to upload document</p>}
+                  </p>
+                </div>
+
+                {/* File Upload (Visible when Active) */}
+                {isActive && (
+                  <div className="mt-4 w-full flex justify-center">
+                    <input
+                      type="file"
+                      onChange={handleFileChange}
+                      className="block w-full text-sm text-gray-500
+                       file:mr-4 file:py-2 file:px-4
+                       file:rounded-lg file:border-0
+                       file:text-sm file:font-semibold
+                       file:bg-[#6A3A9F] file:text-white
+                       hover:file:bg-purple-700 cursor-pointer"
+                    />
+                  </div>
+                )}
+              </div>
+
               {/* <motion.textarea
                 placeholder="Result"
                 rows="10"
