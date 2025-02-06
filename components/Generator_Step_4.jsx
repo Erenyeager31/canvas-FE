@@ -89,6 +89,8 @@ const Generator_Step_4 = () => {
         lang: selectedAudioLang,
       };
 
+      console.log("Inside request :",requestBody)
+
       const response = await fetch(`${BaseUrl}/api/genAudio`, {
         method: "POST",
         headers: {

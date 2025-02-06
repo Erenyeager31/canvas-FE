@@ -213,7 +213,7 @@ const Audio_Cards = () => {
   ];
 
   useEffect(() => {
-    localStorage.setItem('selected_audio_sample', selectedIndex);
+    localStorage.setItem('selected_audio_sample', audioSamples[selectedIndex]?.src);
   }, [selectedIndex]);
 
   const handleSelect = (index) => {

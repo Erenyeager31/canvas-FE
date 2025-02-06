@@ -302,6 +302,7 @@ const Generator_Step_3 = () => {
       if (!generatedScript) return;
 
       // First API Call: Get prompts
+      
       const promptResponse = await fetch(`${BaseUrl}/api/prompts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

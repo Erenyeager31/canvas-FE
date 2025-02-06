@@ -150,28 +150,33 @@
 
 // export default VideoSettings;
 
-
-
-
-
-
-
-
 import React, { useState, useEffect } from "react";
 
 const VideoSettings = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(() => {
     // Initialize state from localStorage or default to "English"
-    return localStorage.getItem("selected_caption_lang") || "English";
-  });
-  
-  const [selectedAudioLanguage, setSelectedAudioLanguage] = useState(() => {
-    // Initialize state from localStorage or default to "English"
-    return localStorage.getItem("selected_audio_lang") || "English";
+    return localStorage.getItem("selected_caption_lang") || "en";
   });
 
-  const languages = ["English", "Hindi"];
-  const Audiolanguages = ["English", "Hindi"];
+  const [selectedAudioLanguage, setSelectedAudioLanguage] = useState(() => {
+    // Initialize state from localStorage or default to "English"
+    return localStorage.getItem("selected_audio_lang") || "en";
+  });
+
+  const languages = [
+    { lang: "English", value: "en" },
+    { lang: "Hindi", value: "hi" },
+  ];
+  const Audiolanguages = [
+    { lang: "English", value: "en" },
+    { lang: "Hindi", value: "hi" },
+  ];
+
+  useEffect(() => {
+    languages.map((l) => {
+      console.log(l);
+    });
+  }, []);
 
   // Update localStorage when caption language changes
   useEffect(() => {
@@ -195,15 +200,15 @@ const VideoSettings = () => {
             <div className="flex flex-wrap gap-3">
               {languages.map((lang) => (
                 <button
-                  key={lang}
-                  onClick={() => setSelectedLanguage(lang)}
+                  key={lang.value}
+                  onClick={() => setSelectedLanguage(lang.value)}
                   className={`px-4 py-2 rounded-lg transition-transform transform hover:scale-110 ${
-                    selectedLanguage === lang
+                    selectedLanguage === lang.value
                       ? "bg-[#6A3A9F] text-white"
                       : "bg-gray-200 text-gray-700"
                   }`}
                 >
-                  {lang}
+                  {lang.lang}
                 </button>
               ))}
             </div>
@@ -217,15 +222,15 @@ const VideoSettings = () => {
             <div className="flex flex-wrap gap-3">
               {Audiolanguages.map((Alang) => (
                 <button
-                  key={Alang}
-                  onClick={() => setSelectedAudioLanguage(Alang)}
+                  key={Alang.value}
+                  onClick={() => setSelectedAudioLanguage(Alang.value)}
                   className={`px-4 py-2 rounded-lg transition-transform transform hover:scale-110 ${
-                    selectedAudioLanguage === Alang
+                    selectedAudioLanguage === Alang.value
                       ? "bg-[#6A3A9F] text-white"
                       : "bg-gray-200 text-gray-700"
                   }`}
                 >
-                  {Alang}
+                  {Alang.lang}
                 </button>
               ))}
             </div>
