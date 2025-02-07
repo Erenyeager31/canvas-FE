@@ -161,6 +161,7 @@
 // integration
 
 import React, { useRef, useState, useEffect } from 'react';
+import { englishAudioSample, hindiAudioSample } from '../src/data/AudioData';
 
 const CustomAudioPlayer = ({ src, title, isSelected, onSelect, onPlay }) => {
   const audioRef = useRef(null);
@@ -205,12 +206,25 @@ const Audio_Cards = () => {
   });
   const [currentAudio, setCurrentAudio] = useState(null);
 
-  const audioSamples = [
-    { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 1' },
-    { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 2' },
-    { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 3' },
-    { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 4' },
-  ];
+  // const audioSamples = [
+  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 1' },
+  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 2' },
+  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 3' },
+  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 4' },
+  // ];
+
+  const [audioSamples,setAudioSamples]=  useState([])
+
+  useEffect(()=>{
+    const audio_lang = localStorage.getItem("selected_audio_lang")
+
+    if(audio_lang == "hi"){
+      setAudioSamples(hindiAudioSample)
+    }else{
+      setAudioSamples(englishAudioSample)
+    }
+  },[])
+
 
   useEffect(() => {
     localStorage.setItem('selected_audio_sample', audioSamples[selectedIndex]?.src);

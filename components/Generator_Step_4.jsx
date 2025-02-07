@@ -66,9 +66,7 @@ const Generator_Step_4 = () => {
       setGeneratedAudioData(JSON.parse(existingAudioData));
       setShowGeneratedAudio(true);
     }
-  }, []);
-
-
+  }, [localStorage]);
 
   const handleGenerateAudio = async () => {
     setLoading(true);

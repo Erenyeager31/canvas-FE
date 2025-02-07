@@ -71,12 +71,13 @@ useEffect(() => {
 
     // Get audio data either from props or localStorage
     const audioSource = audioData || JSON.parse(localStorage.getItem('generated_audio_for_video')) || [];
+    const scriptChunks= localStorage.getItem("generatedScript") .split(".")
     
     // Format the audio samples
     const formattedSamples = Array.isArray(audioSource) 
       ? audioSource.map((src, index) => ({
           src,
-          title: `Sample ${index + 1}`,
+          title: scriptChunks[index],
         }))
       : [];
     
