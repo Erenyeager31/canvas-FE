@@ -327,11 +327,111 @@
 
 
 
+// import React, { useEffect, useState } from "react";
+// import { motion } from "framer-motion";
+// const Video_Cards = () => {
+//   const [videoItems, setVideoItems] = useState([]);
+//   const [startIndex, setStartIndex] = useState(0);
+//   const itemsPerPage = 4;
+
+//   const loadVideoItems = () => {
+//     const storedItems = localStorage.getItem("videoItems");
+//     if (storedItems) {
+//       setVideoItems(JSON.parse(storedItems));
+//     }
+//   };
+
+//   useEffect(() => {
+//     loadVideoItems();
+
+//     const handleStorageChange = (event) => {
+//       if (event.key === "videoItems") {
+//         loadVideoItems();
+//       }
+//     };
+
+//     window.addEventListener("storage", handleStorageChange);
+//     return () => {
+//       window.removeEventListener("storage", handleStorageChange);
+//     };
+//   }, []);
+
+//   const handleNext = () => {
+//     if (startIndex + itemsPerPage < videoItems.length) {
+//       setStartIndex(startIndex + itemsPerPage);
+//     }
+//   };
+
+//   const handlePrev = () => {
+//     if (startIndex - itemsPerPage >= 0) {
+//       setStartIndex(startIndex - itemsPerPage);
+//     }
+//   };
+
+//   return (
+//     <div className="w-full bg-[#D9D9D9] p-6">
+//       {videoItems.length === 0 ? (
+//         <p className="text-center text-gray-500">
+//           No video items generated yet.
+//         </p>
+//       ) : (
+//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#D9D9D9]">
+//           {videoItems
+//             .slice(startIndex, startIndex + itemsPerPage)
+//             .map((item, index) => (
+//               <div
+//                 key={index}
+//                 className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
+//               >
+//                 <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
+//                   <img
+//                     src={item?.imageUrl || "default image"}
+//                     alt="Preview"
+//                     className="h-full w-full object-cover rounded-3xl"
+//                   />
+//                 </div>
+//                 <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2 text-center">
+//                   <p className="bg-[#6A3A9F]">
+//                     {item.description || "Default Description"}
+//                   </p>
+//                 </div>
+//               </div>
+//             ))}
+//         </div>
+//       )}
+
+//       <div className="flex justify-between mt-6 bg-[#D9D9D9]">
+//         <button
+//           onClick={handlePrev}
+//           disabled={startIndex === 0}
+//           className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white rounded disabled:opacity-50 transition transition-transform transform hover:scale-105"
+//         >
+//           Previous
+//         </button>
+//         <button
+//           onClick={handleNext}
+//           disabled={startIndex + itemsPerPage >= videoItems.length}
+//           className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white rounded disabled:opacity-50 transition transition-transform transform hover:scale-105"
+//         >
+//           Next
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Video_Cards;
+
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
 const Video_Cards = () => {
   const [videoItems, setVideoItems] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
+  const [selectedItems, setSelectedItems] = useState({});
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [editPrompt, setEditPrompt] = useState("");
+  const [modifiedPrompts, setModifiedPrompts] = useState({});
   const itemsPerPage = 4;
 
   const loadVideoItems = () => {
@@ -368,6 +468,43 @@ const Video_Cards = () => {
     }
   };
 
+  const toggleSelection = (index) => {
+    setSelectedItems(prev => {
+      const newSelection = {
+        ...prev,
+        [index]: !prev[index]
+      };
+      
+      // If unselecting, cancel any active editing for this item
+      if (!newSelection[index] && editingIndex === index) {
+        setEditingIndex(null);
+        setEditPrompt("");
+      }
+      
+      return newSelection;
+    });
+  };
+
+  const startEditing = (index, currentPrompt) => {
+    if (!selectedItems[index]) return;
+    setEditingIndex(index);
+    setEditPrompt(modifiedPrompts[index] || currentPrompt);
+  };
+
+  const savePrompt = (index) => {
+    if (!selectedItems[index]) return;
+    setModifiedPrompts(prev => ({
+      ...prev,
+      [index]: editPrompt
+    }));
+    setEditingIndex(null);
+  };
+
+  const cancelEditing = () => {
+    setEditingIndex(null);
+    setEditPrompt("");
+  };
+
   return (
     <div className="w-full bg-[#D9D9D9] p-6">
       {videoItems.length === 0 ? (
@@ -378,25 +515,76 @@ const Video_Cards = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#D9D9D9]">
           {videoItems
             .slice(startIndex, startIndex + itemsPerPage)
-            .map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
-              >
-                <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
-                  <img
-                    src={item?.imageUrl || "default image"}
-                    alt="Preview"
-                    className="h-full w-full object-cover rounded-3xl"
-                  />
+            .map((item, index) => {
+              const actualIndex = startIndex + index;
+              const isSelected = selectedItems[actualIndex] || false;
+              
+              return (
+                <div
+                  key={actualIndex}
+                  className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
+                >
+                  <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
+                    <div className="absolute top-4 left-4 z-10">
+                      <input 
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleSelection(actualIndex)}
+                        className="w-5 h-5 rounded-md cursor-pointer"
+                      />
+                    </div>
+                    <img
+                      src={item?.imageUrl || "default image"}
+                      alt="Preview"
+                      className="h-full w-full object-cover rounded-3xl"
+                    />
+                  </div>
+                  <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2">
+                    {editingIndex === actualIndex ? (
+                      <div className="flex flex-col gap-2 bg-[#6A3A9F]">
+                        <textarea
+                          value={editPrompt}
+                          onChange={(e) => setEditPrompt(e.target.value)}
+                          className="w-full p-2 text-black rounded-md resize-none"
+                          rows="3"
+                        />
+                        <div className="flex justify-end gap-2 bg-[#6A3A9F]">
+                          <button
+                            onClick={() => savePrompt(actualIndex)}
+                            className="px-3 py-1 bg-green-600 rounded-md hover:bg-green-700 text-white"
+                            title="Save"
+                          >
+                            ✓
+                          </button>
+                          <button
+                            onClick={cancelEditing}
+                            className="px-3 py-1 bg-red-600 rounded-md hover:bg-red-700 text-white"
+                            title="Cancel"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex justify-between items-center bg-[#6A3A9F]">
+                        <p className="bg-[#6A3A9F] flex-1">
+                          {modifiedPrompts[actualIndex] || item.description || "Default Description"}
+                        </p>
+                        {isSelected && (
+                          <button
+                            onClick={() => startEditing(actualIndex, item.description)}
+                            className="ml-2 px-2 py-1 hover:bg-purple-800 rounded-md"
+                            title="Edit"
+                          >
+                            ✎
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2 text-center">
-                  <p className="bg-[#6A3A9F]">
-                    {item.description || "Default Description"}
-                  </p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       )}
 
@@ -404,14 +592,14 @@ const Video_Cards = () => {
         <button
           onClick={handlePrev}
           disabled={startIndex === 0}
-          className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white rounded disabled:opacity-50 transition transition-transform transform hover:scale-105"
+          className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white disabled:opacity-50 transition transform hover:scale-105"
         >
           Previous
         </button>
         <button
           onClick={handleNext}
           disabled={startIndex + itemsPerPage >= videoItems.length}
-          className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white rounded disabled:opacity-50 transition transition-transform transform hover:scale-105"
+          className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white disabled:opacity-50 transition transform hover:scale-105"
         >
           Next
         </button>

@@ -17,6 +17,7 @@ import Footer from "../components/Footer.jsx";
 import Home from "../components/Home.jsx";
 import User_details from "../components/User_details.jsx";
 import Community from "../components/Community.jsx";
+import Generator_Step_5 from "../components/Generator_Step_5.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -46,8 +47,10 @@ function App() {
         <Route path="/generator-step-2" element={<Generator_Step_2 />} />
         <Route path="/generator-step-3" element={<Generator_Step_3 />} />
         <Route path="/generator-step-4" element={<Generator_Step_4 />} />
+        <Route path="/generateVideo" element={<Generator_Step_5 />} />
         <Route path="/user_details" element={<User_details />} />
         <Route path="/community" element={<Community />} />
+
       </Routes>
     </Router>
     </>

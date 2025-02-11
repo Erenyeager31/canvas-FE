@@ -104,6 +104,7 @@ const Generator_Step_4 = () => {
       const responseData = await response.json();
       localStorage.setItem("generated_audio_for_video", JSON.stringify(responseData));
       console.log("Audio generated successfully:", responseData);
+      setGeneratedAudioData(responseData)
     } catch (error) {
       console.error("Error generating audio:", error);
     } finally {
@@ -175,7 +176,7 @@ const Generator_Step_4 = () => {
 
               <div className="mt-2 bg-[#D9D9D9] flex space-x-4">
                 <Link
-                  to="/"
+                  to="/generateVideo"
                   className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
                 >
                   Next Step

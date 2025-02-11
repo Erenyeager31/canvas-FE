@@ -60,7 +60,7 @@ import Footer from "../components/Footer.jsx";
 const AboutUs = () => {
   const teamMembers = [
     { name: "Ankit Poriya", role: "Frontend Dev, UI/UX Designer", image: "../src/assets/ankit.png"},
-    { name: "Dishant Shah", role: "ML Engineer, Backend Dev",image: "path_to_ankit_image.jpg" },
+    { name: "Dishant Shah", role: "ML Engineer, Backend Dev",image: "../src/assets/dishant.jpg" },
     { name: "Sukumar Soni", role: "Blockchain Dev, Data Analyst",image: "../src/assets/SUKUMAR.jpg" },
     { name: "Bruno Pegado", role: "Project Manager, Full Stack Dev",image: "../src/assets/bruno.jpg" },
   ];
