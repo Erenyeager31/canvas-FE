@@ -422,8 +422,211 @@
 
 // export default Video_Cards;
 
+/* -------------------------------------------------------------------------- */
+/*                    code was working fine on 12-02-2025,                    */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                new code further added for dynamic generation               */
+/* -------------------------------------------------------------------------- */
+
+// import React, { useEffect, useState } from "react";
+// import { motion } from "framer-motion";
+
+// const Video_Cards = () => {
+//   const [videoItems, setVideoItems] = useState([]);
+//   const [startIndex, setStartIndex] = useState(0);
+//   const [selectedItems, setSelectedItems] = useState({});
+//   const [editingIndex, setEditingIndex] = useState(null);
+//   const [editPrompt, setEditPrompt] = useState("");
+//   const [modifiedPrompts, setModifiedPrompts] = useState({});
+//   const itemsPerPage = 4;
+
+//   const loadVideoItems = () => {
+//     const storedItems = localStorage.getItem("videoItems");
+//     if (storedItems) {
+//       setVideoItems(JSON.parse(storedItems));
+//     }
+//   };
+
+//   useEffect(() => {
+//     loadVideoItems();
+
+//     const handleStorageChange = (event) => {
+//       if (event.key === "videoItems") {
+//         loadVideoItems();
+//       }
+//     };
+
+//     window.addEventListener("storage", handleStorageChange);
+//     return () => {
+//       window.removeEventListener("storage", handleStorageChange);
+//     };
+//   }, []);
+
+//   const handleNext = () => {
+//     if (startIndex + itemsPerPage < videoItems.length) {
+//       setStartIndex(startIndex + itemsPerPage);
+//     }
+//   };
+
+//   const handlePrev = () => {
+//     if (startIndex - itemsPerPage >= 0) {
+//       setStartIndex(startIndex - itemsPerPage);
+//     }
+//   };
+
+//   const toggleSelection = (index) => {
+//     setSelectedItems(prev => {
+//       const newSelection = {
+//         ...prev,
+//         [index]: !prev[index]
+//       };
+
+//       // If unselecting, cancel any active editing for this item
+//       if (!newSelection[index] && editingIndex === index) {
+//         setEditingIndex(null);
+//         setEditPrompt("");
+//       }
+
+//       return newSelection;
+//     });
+//   };
+
+//   const startEditing = (index, currentPrompt) => {
+//     if (!selectedItems[index]) return;
+//     setEditingIndex(index);
+//     setEditPrompt(modifiedPrompts[index] || currentPrompt);
+//   };
+
+//   const savePrompt = (index) => {
+//     if (!selectedItems[index]) return;
+//     setModifiedPrompts(prev => ({
+//       ...prev,
+//       [index]: editPrompt
+//     }));
+//     setEditingIndex(null);
+//   };
+
+//   const cancelEditing = () => {
+//     setEditingIndex(null);
+//     setEditPrompt("");
+//   };
+
+//   return (
+//     <div className="w-full bg-[#D9D9D9] p-6">
+//       {videoItems.length === 0 ? (
+//         <p className="text-center text-gray-500">
+//           No video items generated yet.
+//         </p>
+//       ) : (
+//         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 bg-[#D9D9D9]">
+//           {videoItems
+//             .slice(startIndex, startIndex + itemsPerPage)
+//             .map((item, index) => {
+//               const actualIndex = startIndex + index;
+//               const isSelected = selectedItems[actualIndex] || false;
+
+//               return (
+//                 <div
+//                   key={actualIndex}
+//                   className="flex items-center justify-center bg-[#D9D9D9] rounded-3xl p-4 flex-col"
+//                 >
+//                   <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
+//                     <div className="absolute top-4 left-4 z-10">
+//                       <input 
+//                         type="checkbox"
+//                         checked={isSelected}
+//                         onChange={() => toggleSelection(actualIndex)}
+//                         className="w-5 h-5 rounded-md cursor-pointer"
+//                       />
+//                     </div>
+//                     <img
+//                       src={item?.imageUrl || "default image"}
+//                       alt="Preview"
+//                       className="h-full w-full object-cover rounded-3xl"
+//                     />
+//                   </div>
+//                   <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2">
+//                     {editingIndex === actualIndex ? (
+//                       <div className="flex flex-col gap-2 bg-[#6A3A9F]">
+//                         <textarea
+//                           value={editPrompt}
+//                           onChange={(e) => setEditPrompt(e.target.value)}
+//                           className="w-full p-2 text-black rounded-md resize-none"
+//                           rows="3"
+//                         />
+//                         <div className="flex justify-end gap-2 bg-[#6A3A9F]">
+//                           <button
+//                             onClick={() => savePrompt(actualIndex)}
+//                             className="px-3 py-1 bg-green-600 rounded-md hover:bg-green-700 text-white"
+//                             title="Save"
+//                           >
+//                             ✓
+//                           </button>
+//                           <button
+//                             onClick={cancelEditing}
+//                             className="px-3 py-1 bg-red-600 rounded-md hover:bg-red-700 text-white"
+//                             title="Cancel"
+//                           >
+//                             ✕
+//                           </button>
+//                         </div>
+//                       </div>
+//                     ) : (
+//                       <div className="flex justify-between items-center bg-[#6A3A9F]">
+//                         <p className="bg-[#6A3A9F] flex-1">
+//                           {modifiedPrompts[actualIndex] || item.description || "Default Description"}
+//                         </p>
+//                         {isSelected && (
+//                           <button
+//                             onClick={() => startEditing(actualIndex, item.description)}
+//                             className="ml-2 px-2 py-1 hover:bg-purple-800 rounded-md"
+//                             title="Edit"
+//                           >
+//                             ✎
+//                           </button>
+//                         )}
+//                       </div>
+//                     )}
+//                   </div>
+//                 </div>
+//               );
+//             })}
+//         </div>
+//       )}
+
+//       <div className="flex justify-between mt-6 bg-[#D9D9D9]">
+//         <button
+//           onClick={handlePrev}
+//           disabled={startIndex === 0}
+//           className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white disabled:opacity-50 transition transform hover:scale-105"
+//         >
+//           Previous
+//         </button>
+//         <button
+//           onClick={handleNext}
+//           disabled={startIndex + itemsPerPage >= videoItems.length}
+//           className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white disabled:opacity-50 transition transform hover:scale-105"
+//         >
+//           Next
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Video_Cards;
+
+/* -------------------------------------------------------------------------- */
+/*                            New code on 12-02-25                            */
+/* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                     functionality of dynamic generation                    */
+/* -------------------------------------------------------------------------- */
+
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { BaseUrl } from "../src/utils/BaseUrls";
 
 const Video_Cards = () => {
   const [videoItems, setVideoItems] = useState([]);
@@ -432,6 +635,7 @@ const Video_Cards = () => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editPrompt, setEditPrompt] = useState("");
   const [modifiedPrompts, setModifiedPrompts] = useState({});
+  const [isRegenerating, setIsRegenerating] = useState(false);
   const itemsPerPage = 4;
 
   const loadVideoItems = () => {
@@ -474,13 +678,12 @@ const Video_Cards = () => {
         ...prev,
         [index]: !prev[index]
       };
-      
-      // If unselecting, cancel any active editing for this item
+
       if (!newSelection[index] && editingIndex === index) {
         setEditingIndex(null);
         setEditPrompt("");
       }
-      
+
       return newSelection;
     });
   };
@@ -505,6 +708,70 @@ const Video_Cards = () => {
     setEditPrompt("");
   };
 
+  const handleRegenerate = async () => {
+    try {
+      setIsRegenerating(true);
+
+      // Collect modified prompts as a list
+      const promptsToRegenerate = [];
+      const selectedIndices = [];
+
+      Object.keys(selectedItems).forEach(index => {
+        if (selectedItems[index] && modifiedPrompts[index]) {
+          promptsToRegenerate.push(modifiedPrompts[index]);
+          selectedIndices.push(parseInt(index));
+        }
+      });
+
+      if (promptsToRegenerate.length === 0) {
+        console.log("No modified prompts to regenerate");
+        return;
+      }
+
+      const response = await fetch(`${BaseUrl}/api/genImage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompts: promptsToRegenerate }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to regenerate images');
+      }
+
+      const newImageUrls = await response.json();
+
+      // Update only the modified images while keeping the rest intact
+      setVideoItems(prevItems => {
+        const updatedItems = [...prevItems];
+        selectedIndices.forEach((index, arrayIndex) => {
+          if (newImageUrls[arrayIndex]) {
+            updatedItems[index] = {
+              ...updatedItems[index],
+              imageUrl: newImageUrls[arrayIndex],
+              description: promptsToRegenerate[arrayIndex]
+            };
+          }
+        });
+        return updatedItems;
+      });
+
+      // Update localStorage with new items
+      localStorage.setItem("videoItems", JSON.stringify(videoItems));
+
+      // Clear selections after successful regeneration
+      setSelectedItems({});
+      setModifiedPrompts({});
+    } catch (error) {
+      console.error('Error regenerating images:', error);
+    } finally {
+      setIsRegenerating(false);
+    }
+  };
+
+  const hasSelectedItems = Object.values(selectedItems).some(selected => selected);
+
   return (
     <div className="w-full bg-[#D9D9D9] p-6">
       {videoItems.length === 0 ? (
@@ -518,7 +785,7 @@ const Video_Cards = () => {
             .map((item, index) => {
               const actualIndex = startIndex + index;
               const isSelected = selectedItems[actualIndex] || false;
-              
+
               return (
                 <div
                   key={actualIndex}
@@ -526,7 +793,7 @@ const Video_Cards = () => {
                 >
                   <div className="relative h-[22rem] w-[20rem] border border-gray-300 rounded-3xl flex items-center justify-center shadow-lg overflow-hidden">
                     <div className="absolute top-4 left-4 z-10">
-                      <input 
+                      <input
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleSelection(actualIndex)}
@@ -596,6 +863,17 @@ const Video_Cards = () => {
         >
           Previous
         </button>
+
+        {hasSelectedItems && (
+          <button
+            onClick={handleRegenerate}
+            disabled={isRegenerating}
+            className="bg-[#6A3A9F] px-4 py-2 rounded-lg text-white disabled:opacity-50 transition transform hover:scale-105"
+          >
+            {isRegenerating ? "Regenerating..." : "Regenerate Selected"}
+          </button>
+        )}
+
         <button
           onClick={handleNext}
           disabled={startIndex + itemsPerPage >= videoItems.length}
