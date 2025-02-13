@@ -153,7 +153,7 @@ const Generator_Step_4 = () => {
               </p>
 
               <motion.div
-                className="bg-[#D9D9D9]"
+                className="bg-[#D9D9D9] flex"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}

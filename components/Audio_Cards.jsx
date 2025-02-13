@@ -152,16 +152,27 @@
 
 // export default Audio_Cards;
 
-
-
-
-
-
-
 // integration
-
+/* -------------------------------------------------------------------------- */
+/*                      latest working code - 13/02/2025                      */
+/* -------------------------------------------------------------------------- */
+/*                                  New code                                  */
+/* -------------------------------------------------------------------------- */
+/*                             added functionality                            */
+/* -------------------------------------------------------------------------- */
+/*                              user voice upload                             */
+/* -------------------------------------------------------------------------- */
 import React, { useRef, useState, useEffect } from 'react';
 import { englishAudioSample, hindiAudioSample } from '../src/data/AudioData';
+import plus_icon from "../src/assets/plus.svg"
+
+const uploadFile = async (file) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(URL.createObjectURL(file));
+    }, 1000);
+  });
+};
 
 const CustomAudioPlayer = ({ src, title, isSelected, onSelect, onPlay }) => {
   const audioRef = useRef(null);
@@ -205,25 +216,18 @@ const Audio_Cards = () => {
     return localStorage.getItem('selected_audio_sample') || null;
   });
   const [currentAudio, setCurrentAudio] = useState(null);
+  const fileInputRef = useRef(null);
+  const [audioSamples, setAudioSamples] = useState([])
 
-  // const audioSamples = [
-  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 1' },
-  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 2' },
-  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 3' },
-  //   { src: 'https://res.cloudinary.com/dqvp6ghno/video/upload/v1737735727/CANVAS/demo/demo_d8layd-_AudioTrimmer.com_arhihp.wav', title: 'Sample 4' },
-  // ];
-
-  const [audioSamples,setAudioSamples]=  useState([])
-
-  useEffect(()=>{
+  useEffect(() => {
     const audio_lang = localStorage.getItem("selected_audio_lang")
 
-    if(audio_lang == "hi"){
+    if (audio_lang == "hi") {
       setAudioSamples(hindiAudioSample)
-    }else{
+    } else {
       setAudioSamples(englishAudioSample)
     }
-  },[])
+  }, [])
 
 
   useEffect(() => {
@@ -242,6 +246,15 @@ const Audio_Cards = () => {
     setCurrentAudio(audio);
   };
 
+  const handleFileSelect = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const fileUrl = await uploadFile(file);
+      setAudioSamples((prevSamples) => [...prevSamples, { src: fileUrl, title: file.name }]);
+    }
+  };
+
+
   return (
     <div className="container mx-auto my-8 bg-[#D9D9D9]">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 bg-[#D9D9D9]">
@@ -255,6 +268,21 @@ const Audio_Cards = () => {
             onPlay={handlePlay}
           />
         ))}
+        {/* button to add new voice */}
+        <input
+          type="file"
+          accept="audio/*"
+          ref={fileInputRef}
+          className="hidden"
+          onChange={handleFileSelect}
+        />
+        <div
+          className="flex flex-col items-center p-4 bg-[#6A3A9F] rounded-lg shadow-lg w-[200px] transition duration-300 hover:bg-[#7b48b8] hover:scale-105 cursor-pointer"
+          onClick={() => fileInputRef.current.click()}
+        >
+          <h3 className="mb-2 text-lg font-semibold text-white bg-[#6A3A9F]">Add new Voice</h3>
+          <img src={plus_icon} alt="Upload" className="bg-transparent transition duration-300 hover:scale-110" />
+        </div>
       </div>
     </div>
   );
