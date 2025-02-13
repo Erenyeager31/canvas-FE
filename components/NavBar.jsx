@@ -21,7 +21,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
- 
+
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -41,10 +41,12 @@ const Navbar = () => {
       <div className="sticky top-0">
         <nav className="flex items-center justify-between h-16 px-12 bg-white shadow-lg shadow-purple-500/75">
           <span
-            className="text-2xl font-bold text-[#6A3A9F]"
+            className="text-2xl font-bold text-[#6A3A9F] cursor-pointer"
             style={{ fontFamily: "'Caveat', cursive" }}
           >
-            CANVAS
+            <Link to={"/"}>
+              CANVAS
+            </Link>
           </span>
           <button
             className="flex flex-col justify-center items-center p-2 transition-transform transform hover:scale-150"
@@ -138,7 +140,7 @@ const Navbar = () => {
                 Create Video
               </Link>
 
-              <Link
+              {/* <Link
                 to="community"
                 className="flex items-center text-gray-800 hover:bg-gray-100 px-4 py-2 rounded w-full transition-transform transform hover:scale-105"
                 onClick={() => setMenuOpen(false)}
@@ -172,11 +174,11 @@ const Navbar = () => {
                   />
                 </svg>
                 User Details
-              </Link>
+              </Link> */}
             </nav>
             {/* Login and Sign Up Buttons */}
             {/* <div className="p-6 mt-auto flex space-x-4"> */}
-            <div className="p-6 mt-2 flex space-x-4">
+            {/* <div className="p-6 mt-2 flex space-x-4">
               <Link
                 to="/login"
                 className="w-full py-2 px-4 bg-[#6A3A9F] text-center text-white rounded-md hover:bg-purple-600 transition-transform transform hover:scale-105"
@@ -191,7 +193,7 @@ const Navbar = () => {
               >
                 Sign Up
               </Link>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
