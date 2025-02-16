@@ -262,6 +262,7 @@ const Generator_Step_3 = () => {
   const [videoItems, setVideoItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showVideoCards, setShowVideoCards] = useState(false);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   useEffect(() => {
     const script = localStorage.getItem("generatedScript");
@@ -314,6 +315,7 @@ const Generator_Step_3 = () => {
       localStorage.setItem("videoItems", JSON.stringify(updatedItems));
       setVideoItems(updatedItems);
       setShowVideoCards(true); // Show video cards after generation
+      setIsNextDisabled(false); // Enable Next Step after images are received
     } catch (error) {
       console.error("Error fetching prompts or images:", error);
     } finally {
@@ -322,6 +324,7 @@ const Generator_Step_3 = () => {
   };
 
   return (
+    <>
     <div className="mx-4 mt-6">
       <motion.div
         className="min-h-screen white"
@@ -374,7 +377,8 @@ const Generator_Step_3 = () => {
             <div className="mt-2 flex space-x-4 bg-[#D9D9D9]">
               <Link
                 to="/generator-step-4"
-                className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition-transform transform hover:scale-105"
+                className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition-transform transform hover:scale-105 ${isNextDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                disabled={isNextDisabled}
               >
                 Next Step
               </Link>
@@ -383,6 +387,8 @@ const Generator_Step_3 = () => {
         </motion.div>
       </motion.div>
     </div>
+    <div className="mt-2"></div>
+    </>
   );
 };
 

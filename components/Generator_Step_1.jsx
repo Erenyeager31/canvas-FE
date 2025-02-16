@@ -137,11 +137,13 @@ import uploadFile from "../src/utils/cloudinaryUploader.js";
 // import Generator_Step_2 from "../components/Generator_Step_2.jsx";
 
 const Generator_Step_1 = () => {
+  localStorage.clear();
   const [inputText, setInputText] = useState(""); // For managing input text
   const [result, setResult] = useState(""); // For managing API response
   const [isLoading, setIsLoading] = useState(false); // For managing loading state
   const [isActive, setIsActive] = useState(false);
   const [fileURL, setURL] = useState(null);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
@@ -201,6 +203,10 @@ const Generator_Step_1 = () => {
       //   localStorage.setItem("generatedScript", data.generated_text);
       // }
       setResult(data.generated_text || "No script generated."); // Update result
+      if (data.generated_text) {
+        setIsNextDisabled(false); // Enable Next Step once data is received
+      }
+      console.log(data)
       console.log(data.generated_text);
     } catch (error) {
       console.error("Error generating script:", error);
@@ -337,7 +343,10 @@ const Generator_Step_1 = () => {
                       localStorage.setItem("generatedScript", result);
                     }
                   }}
-                  className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                  className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${
+                    isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                  disabled={isNextDisabled}
                 >
                   Next Step
                 </Link>

@@ -58,6 +58,7 @@ const Generator_Step_4 = () => {
   const [loading, setLoading] = useState(false);
   const [showGeneratedAudio, setShowGeneratedAudio] = useState(false);
   const [generatedAudioData, setGeneratedAudioData] = useState(null);
+  const [audioGenerated, setAudioGenerated] = useState(false); // New state to track completion
   
   useEffect(() => {
     // Check if there's existing generated audio data
@@ -65,10 +66,18 @@ const Generator_Step_4 = () => {
     if (existingAudioData) {
       setGeneratedAudioData(JSON.parse(existingAudioData));
       setShowGeneratedAudio(true);
+      // setAudioGenerated(true); // Enable the next step if audio data already exists
     }
   }, [localStorage]);
 
   const handleGenerateAudio = async () => {
+    const selectedAudioSample = localStorage.getItem("selected_audio_sample");
+
+    if (!selectedAudioSample) {
+      alert("Please select or upload an audio sample before generating audio.");
+      return;
+    }
+    
     setLoading(true);
     try {
       const generatedScript = localStorage.getItem("generatedScript");
@@ -105,6 +114,7 @@ const Generator_Step_4 = () => {
       localStorage.setItem("generated_audio_for_video", JSON.stringify(responseData));
       console.log("Audio generated successfully:", responseData);
       setGeneratedAudioData(responseData)
+      setAudioGenerated(true); // Enable the next step button
     } catch (error) {
       console.error("Error generating audio:", error);
     } finally {
@@ -177,7 +187,9 @@ const Generator_Step_4 = () => {
               <div className="mt-2 bg-[#D9D9D9] flex space-x-4">
                 <Link
                   to="/generateVideo"
-                  className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                  className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${
+                    audioGenerated ? "hover:bg-purple-700" : "opacity-50 cursor-not-allowed"
+                  }`}
                 >
                   Next Step
                 </Link>
