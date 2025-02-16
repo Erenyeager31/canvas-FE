@@ -99,7 +99,7 @@ export default function Generator_Step_5() {
                         Your browser does not support the video tag.
                       </video>
                     ) : (
-                      <div className="text-gray-600 w-256 h-256">Preview</div>
+                      <div className="text-gray-600  bg-[#D9D9D9] w-256 h-256">Preview</div>
                     )}
                   </div>
                   {/* {successMessage && (
