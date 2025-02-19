@@ -38,7 +38,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="sticky top-0">
+      <div className="sticky top-0 z-[10]">
         <nav className="flex items-center justify-between h-16 px-12 bg-white shadow-lg shadow-purple-500/75">
           <span
             className="text-2xl font-bold text-[#6A3A9F] cursor-pointer"

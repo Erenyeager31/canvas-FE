@@ -1,0 +1,30 @@
+@keyframes wordGlow {
+  0% { 
+    text-shadow: 0 0 5px rgba(106, 58, 159, 0.5); 
+  }
+  50% { 
+    text-shadow: 0 0 15px rgba(106, 58, 159, 1),
+                 0 0 20px rgba(106, 58, 159, 0.6); 
+  }
+  100% { 
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5); 
+  }
+}
+
+.word-cloud-text {
+  animation: wordGlow 2.5s infinite alternate ease-in-out;
+  color: #ddd; /* Light color for better contrast */
+}
+
+/* Staggered glow timing */
+.word-cloud-text:nth-child(3n) {
+  animation-delay: 0.5s;
+}
+
+.word-cloud-text:nth-child(3n+1) {
+  animation-delay: 1s;
+}
+
+.word-cloud-text:nth-child(3n+2) {
+  animation-delay: 1.5s;
+}
