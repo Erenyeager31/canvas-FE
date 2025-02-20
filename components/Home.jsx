@@ -116,7 +116,10 @@ const Home = () => {
     }, 500);
     const svg = document.querySelector("svg"); // Select the first SVG in the DOM
     if (svg) {
-      svg.style.background = "black"; // Set black background
+      svg.style.background = "#6A3A9Faa"; 
+      svg.style.borderRadius = "20px";
+      // svg.style.background = "radial-gradient(circle, rgba(0, 0, 0, 0.8) 20%, rgba(128, 128, 128, 0.5) 60%, rgba(255, 255, 255, 0.3) 100%)";
+
     }
   }, [words]);
 
@@ -199,7 +202,7 @@ const Home = () => {
                   const positionRatio = positionInArray / words.length;
                   return `hsl(${(positionInArray * 360) / words.length % 360}, 
                       ${80 - positionRatio * 30}%, 
-                      ${60 - positionRatio * 20}%)`;
+                      ${60 - positionRatio * 20}%)`
                 }}
                 width={800}
                 height={550}
@@ -215,11 +218,8 @@ const Home = () => {
           ) : (
             <img src={image} alt="Video generation" className="w-128 max-h-[80vh]" />
           )}
-        </motion.div>;
-
-
+        </motion.div>
       </motion.div>
-
       <Footer />
     </>
   );
