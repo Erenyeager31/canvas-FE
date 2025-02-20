@@ -36,6 +36,7 @@
 
 // export default Home;
 import React, { useEffect, useState } from "react";
+import image from '../src/assets/image.jpg'
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Footer from "../components/Footer.jsx";

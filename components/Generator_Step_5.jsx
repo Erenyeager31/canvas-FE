@@ -7,6 +7,8 @@ export default function Generator_Step_5() {
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
   const [localData, setLocalData] = useState({});
+  const [isDataFetched, setIsDataFetched] = useState(false); ////////////////
+
   const [successMessage, setSuccessMessage] = useState(false); /////////////////////////////
 
   // Load 4 keys from localStorage on first render
@@ -22,7 +24,22 @@ export default function Generator_Step_5() {
     let storedData = {};
 
     keys.forEach((key, index) => {
-      storedData[actualKeys[index]] = localStorage.getItem(key) || "N/A";
+      let value = localStorage.getItem(key) || "N/A";
+
+      // Parse JSON if the key is image_urls or audio_urls and value is not "N/A"
+      if (
+        ["image_urls", "audio_urls"].includes(actualKeys[index]) &&
+        value !== "N/A"
+      ) {
+        try {
+          value = JSON.parse(value);
+        } catch (error) {
+          console.error(`Error parsing ${actualKeys[index]}:`, error);
+          value = [];
+        }
+      }
+
+      storedData[actualKeys[index]] = value;
     });
 
     setLocalData(storedData);
@@ -32,6 +49,7 @@ export default function Generator_Step_5() {
     setLoading(true);
     setVideoUrl(null); // Reset previous video
     setSuccessMessage(false); ///////////////////////////////
+    setIsDataFetched(false); // Reset fetched state
 
     const requestBody = {
       ...localData,
@@ -50,6 +68,7 @@ export default function Generator_Step_5() {
       if (data.url) {
         setVideoUrl(data.url);
         setSuccessMessage(true); ///////////////////////////////////
+        setIsDataFetched(true); // Enable the button after fetching
       } else {
         console.error("Invalid response:", data);
       }
@@ -88,18 +107,21 @@ export default function Generator_Step_5() {
               <p className="text-gray-600 text-sm md:text-base bg-[#D9D9D9]">
                 Step 5 : Just one more click to generate vedio
               </p>
-              <div className="flex items-center justify-center  bg-[#D9D9D9]">
+              <div className="flex items-center justify-center bg-[#D9D9D9]">
                 <div className="flex flex-col items-center bg-[#D9D9D9]">
-                  <div className="w-256 h-256 bg-gray-200 border-2 border-gray-400 flex items-center justify-center">
+                  <div className="p-6 w-256 h-256 border-2 border-gray-400 flex items-center justify-center bg-[#D9D9D9]">
                     {loading ? (
-                      <div className="w-256 h-256 animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500"></div>
+                      // <div className="w-256 h-256 animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500"></div>
+                      <div className="w-12 h-12 animate-spin rounded-full border-4 border-[#6A3A9F] border-t-transparent bg-[#D9D9D9]"></div>
                     ) : videoUrl ? (
                       <video className="w-256 h-256" controls>
                         <source src={videoUrl} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
                     ) : (
-                      <div className="text-gray-600  bg-[#D9D9D9] w-256 h-256">Preview</div>
+                      <div className="p-6 text-gray-600 bg-[#D9D9D9] w-256 h-256">
+                        Preview
+                      </div>
                     )}
                   </div>
                   {/* {successMessage && (
@@ -168,7 +190,12 @@ export default function Generator_Step_5() {
 
                   <Link
                     to="/"
-                    className="mt-2 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                    className={`mt-2 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${
+                      !isDataFetched
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-purple-700 hover:scale-105"
+                    }`}
+                    style={{ pointerEvents: !isDataFetched ? "none" : "auto" }}
                   >
                     Back to Home
                   </Link>
