@@ -283,12 +283,13 @@ const Generator_Step_3 = () => {
 
       if (!generatedScript) return;
 
+      const style_guide = sessionStorage.getItem("style_guide") || "Cinematic";
       // First API Call: Get prompts
       
       const promptResponse = await fetch(`${BaseUrl}/api/prompts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ story: generatedScript }),
+        body: JSON.stringify({ story: `${generatedScript}#${style_guide}` }),
       });
       const promptData = await promptResponse.json();
       const prompts = promptData.prompts || [];

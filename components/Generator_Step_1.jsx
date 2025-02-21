@@ -143,7 +143,18 @@ const Generator_Step_1 = () => {
   const [isLoading, setIsLoading] = useState(false); // For managing loading state
   const [isActive, setIsActive] = useState(false);
   const [fileURL, setURL] = useState(null);
+  const [style_guide, setStyleGuide] = useState("Cinematic");
   const [isNextDisabled, setIsNextDisabled] = useState(true);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const options = ["Historical",
+    "Biography",
+    "Cinematic"];
+
+  const handleSelect = (option) => {
+    setStyleGuide(option);
+    setIsOpen(false);
+  };
 
   const handleFileChange = (event) => {
     const file = event.target.files?.[0];
@@ -184,9 +195,11 @@ const Generator_Step_1 = () => {
     }
     setIsLoading(true);
 
-    const payload = { topic: inputText, userDocURL: fileURL }
+    const payload = { topic: `${inputText}#${style_guide}`, userDocURL: fileURL }
     console.log(payload)
     setURL(null)
+
+    sessionStorage.setItem("style_guide",style_guide);
 
     try {
       // Example API call (replace with your actual endpoint)
@@ -245,7 +258,7 @@ const Generator_Step_1 = () => {
                 Step 1: Generate a Script using Generative AI by describing what
                 you want to see.
               </p>
-              <motion.input
+              {/* <motion.input
                 type="text"
                 placeholder="What script do you want to generate?"
                 value={inputText}
@@ -255,6 +268,43 @@ const Generator_Step_1 = () => {
                 animate={{ x: 0 }}
                 transition={{ type: "spring", stiffness: 120 }}
               />
+             */}
+              <div className="flex space-x-2 items-center bg-inherit">
+                <motion.input
+                  type="text"
+                  placeholder="What script do you want to generate?"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                  className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none"
+                  initial={{ x: -100 }}
+                  animate={{ x: 0 }}
+                  transition={{ type: "spring", stiffness: 120 }}
+                />
+                <div className="relative inline-block text-left w-full max-w-xs bg-inherit">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full px-4 py-2 bg-[#6A3A9F] text-white rounded-lg"
+                    onClick={() => setIsOpen(!isOpen)}
+                  >
+                    {style_guide || "Select a type"}
+                  </motion.button>
+                  {isOpen && (
+                    <div className="absolute mt-2 w-full bg-white border rounded-lg shadow-lg">
+                      {options.map((option) => (
+                        <motion.div
+                          key={option}
+                          whileHover={{ backgroundColor: "#6A3A9F", color: "white" }}
+                          className="px-4 py-2 cursor-pointer"
+                          onClick={() => handleSelect(option)}
+                        >
+                          {option}
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
               <motion.button
                 onClick={handleGenerate}
                 className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
@@ -264,8 +314,7 @@ const Generator_Step_1 = () => {
                 disabled={isLoading}
               >
                 {isLoading ? "Generating..." : "Generate"}
-              </motion.button>
-
+              </motion.button> 
               <div className="p-4 rounded-lg w-fit flex flex-col items-center justify-center shadow-md">
                 {/* Toggle Switch */}
                 <div className="w-[300px] flex justify-center align-middle">
@@ -302,17 +351,6 @@ const Generator_Step_1 = () => {
                   </div>
                 )}
               </div>
-
-              {/* <motion.textarea
-                placeholder="Result"
-                rows="10"
-                value={result}
-                readOnly
-                className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-              ></motion.textarea> */}
               <motion.textarea
                 placeholder="Result"
                 rows="10"
@@ -325,17 +363,6 @@ const Generator_Step_1 = () => {
               ></motion.textarea>
 
               <div className="mt-2 bg-[#D9D9D9] flex space-x-4">
-                {/* <Link
-                  to={{
-      
-                    pathname: "/generator-step-2",
-                    // state: { story: data.story }, // Pass the story here
-                  }}
-                  className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
-                >
-                  Next Step
-                </Link> */}
-
                 <Link
                   to="/generator-step-2"
                   onClick={() => {
@@ -343,9 +370,8 @@ const Generator_Step_1 = () => {
                       localStorage.setItem("generatedScript", result);
                     }
                   }}
-                  className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${
-                    isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                  className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
                   disabled={isNextDisabled}
                 >
                   Next Step
