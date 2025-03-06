@@ -285,7 +285,7 @@ const Generator_Step_3 = () => {
 
       const style_guide = sessionStorage.getItem("style_guide") || "Cinematic";
       // First API Call: Get prompts
-      
+
       const promptResponse = await fetch(`${BaseUrl}/api/prompts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -300,7 +300,13 @@ const Generator_Step_3 = () => {
       const imageResponse = await fetch(`${BaseUrl}/api/genImage`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompts }),
+        body: JSON.stringify({
+          prompts,
+          "width": 512,
+          "height": 512,
+          "guidance_scale": 1.1,
+          "inference_steps": 2
+        }),
       });
       const imageData = await imageResponse.json();
       const images = imageData.images || [];
@@ -326,69 +332,69 @@ const Generator_Step_3 = () => {
 
   return (
     <>
-    <div className="mx-4 mt-6">
-      <motion.div
-        className="min-h-screen white"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div className="mx-4 mt-6">
         <motion.div
-          className="bg-white w-full h-full"
-          initial={{ y: -50 }}
-          animate={{ y: 0 }}
-          transition={{ type: "spring", stiffness: 100 }}
+          className="min-h-screen white"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="p-6 space-y-4 bg-[#D9D9D9] rounded-3xl">
-            <motion.h1
-              className="bg-[#D9D9D9] text-xl md:text-2xl font-semibold text-[#6A3A9F]"
-              style={{ fontFamily: "'Caveat', cursive" }}
-            >
-              AI Video Generator
-            </motion.h1>
-            <p className="text-gray-600 text-sm md:text-base bg-[#D9D9D9]">
-              Step 3 : Generate all the required images based on the script
-            </p>
-
-            <motion.textarea
-              placeholder="What script do you want to generate?"
-              rows="10"
-              value={generatedScript || "No script generated."}
-              className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none"
-            ></motion.textarea>
-
-            <motion.button
-              className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
-              onClick={fetchPrompts}
-              disabled={loading}
-            >
-              {loading ? "Generating..." : "Generate"}
-            </motion.button>
-
-            {showVideoCards && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
+          <motion.div
+            className="bg-white w-full h-full"
+            initial={{ y: -50 }}
+            animate={{ y: 0 }}
+            transition={{ type: "spring", stiffness: 100 }}
+          >
+            <div className="p-6 space-y-4 bg-[#D9D9D9] rounded-3xl">
+              <motion.h1
+                className="bg-[#D9D9D9] text-xl md:text-2xl font-semibold text-[#6A3A9F]"
+                style={{ fontFamily: "'Caveat', cursive" }}
               >
-                <Video_Cards videoItems={videoItems} />
-              </motion.div>
-            )}
+                AI Video Generator
+              </motion.h1>
+              <p className="text-gray-600 text-sm md:text-base bg-[#D9D9D9]">
+                Step 3 : Generate all the required images based on the script
+              </p>
 
-            <div className="mt-2 flex space-x-4 bg-[#D9D9D9]">
-              <Link
-                to="/generator-step-4"
-                className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition-transform transform hover:scale-105 ${isNextDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
-                disabled={isNextDisabled}
+              <motion.textarea
+                placeholder="What script do you want to generate?"
+                rows="10"
+                value={generatedScript || "No script generated."}
+                className="w-full border border-gray-300 rounded-2xl px-4 py-2 shadow-lg focus:ring-2 focus:ring-purple-500 focus:outline-none resize-none"
+              ></motion.textarea>
+
+              <motion.button
+                className="bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                onClick={fetchPrompts}
+                disabled={loading}
               >
-                Next Step
-              </Link>
+                {loading ? "Generating..." : "Generate"}
+              </motion.button>
+
+              {showVideoCards && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Video_Cards videoItems={videoItems} />
+                </motion.div>
+              )}
+
+              <div className="mt-2 flex space-x-4 bg-[#D9D9D9]">
+                <Link
+                  to="/generator-step-4"
+                  className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition-transform transform hover:scale-105 ${isNextDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={isNextDisabled}
+                >
+                  Next Step
+                </Link>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
-    </div>
-    <div className="mt-2"></div>
+      </div>
+      <div className="mt-2"></div>
     </>
   );
 };

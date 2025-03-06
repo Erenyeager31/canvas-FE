@@ -733,7 +733,13 @@ const Video_Cards = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompts: promptsToRegenerate }),
+        body: JSON.stringify({
+          prompts: promptsToRegenerate,
+          "width": 512,
+          "height": 512,
+          "guidance_scale": 1.1,
+          "inference_steps": 2
+        }),
       });
 
       if (!response.ok) {
@@ -803,7 +809,7 @@ const Video_Cards = () => {
                     <img
                       src={item?.imageUrl || "default image"}
                       alt="Preview"
-                      className="h-full w-full object-cover rounded-3xl"
+                      className="h-full w-full aspect-16/9 object-cover rounded-3xl"
                     />
                   </div>
                   <div className="w-[20rem] mt-4 bg-[#6A3A9F] text-white text-sm rounded-md p-2">
