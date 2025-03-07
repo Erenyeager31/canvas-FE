@@ -712,7 +712,7 @@ const Video_Cards = () => {
     try {
       setIsRegenerating(true);
 
-      // Collect modified prompts as a list
+      // Collect modified prompts and their indices
       const promptsToRegenerate = [];
       const selectedIndices = [];
 
@@ -748,23 +748,24 @@ const Video_Cards = () => {
 
       const newImageUrls = await response.json();
 
-      // Update only the modified images while keeping the rest intact
       setVideoItems(prevItems => {
         const updatedItems = [...prevItems];
+
         selectedIndices.forEach((index, arrayIndex) => {
           if (newImageUrls[arrayIndex]) {
             updatedItems[index] = {
               ...updatedItems[index],
-              imageUrl: newImageUrls[arrayIndex],
+              imageUrl: newImageUrls[arrayIndex], // Ensure proper access to images
               description: promptsToRegenerate[arrayIndex]
             };
           }
         });
+
+        // Store updated items in localStorage
+        localStorage.setItem("videoItems", JSON.stringify(updatedItems));
+
         return updatedItems;
       });
-
-      // Update localStorage with new items
-      localStorage.setItem("videoItems", JSON.stringify(videoItems));
 
       // Clear selections after successful regeneration
       setSelectedItems({});
