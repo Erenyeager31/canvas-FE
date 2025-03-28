@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { BaseUrl } from "../src/utils/BaseUrls";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import QRModal from "./QRModal";
+import { QRCodeCanvas } from "qrcode.react";
 
 export default function Generator_Step_5() {
   const [loading, setLoading] = useState(false);
   const [videoUrl, setVideoUrl] = useState(null);
   const [localData, setLocalData] = useState({});
-  const [isDataFetched, setIsDataFetched] = useState(false); ////////////////
-
-  const [successMessage, setSuccessMessage] = useState(false); /////////////////////////////
+  const [isDataFetched, setIsDataFetched] = useState(false);
+  const [isGenerated, setIsGenerated] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   // Load 4 keys from localStorage on first render
   useEffect(() => {
@@ -45,6 +48,31 @@ export default function Generator_Step_5() {
     setLocalData(storedData);
   }, []);
 
+  const copyURL = () => {
+    navigator.clipboard.writeText(videoUrl)
+      .then(() => alert("URL copied to clipboard!"))
+      .catch((err) => console.error("Failed to copy URL: ", err));
+  };
+
+  const downloadVideo = async (videoURL, fileName = "video.mp4") => {
+    try {
+      const response = await fetch(videoURL);
+      const blob = await response.blob();
+
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(link.href); // Free memory
+    } catch (error) {
+      console.error("Error downloading video:", error);
+    }
+  };
+
   const handleGenerate = async () => {
     setLoading(true);
     setVideoUrl(null); // Reset previous video
@@ -56,6 +84,7 @@ export default function Generator_Step_5() {
     };
 
     try {
+      setIsGenerated(false);
       const response = await fetch(`${BaseUrl}/api/genVideo`, {
         method: "POST",
         headers: {
@@ -69,6 +98,7 @@ export default function Generator_Step_5() {
         setVideoUrl(data.url);
         setSuccessMessage(true); ///////////////////////////////////
         setIsDataFetched(true); // Enable the button after fetching
+        setIsGenerated(true);
       } else {
         console.error("Invalid response:", data);
       }
@@ -124,16 +154,6 @@ export default function Generator_Step_5() {
                       </div>
                     )}
                   </div>
-                  {/* {successMessage && (
-                    <motion.div
-                      className="mt-5 text-green-600 font-bold text-lg bg-[#D9D9D9]"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, type: "spring" }}
-                    >
-                      🎉 Congratulations! Video generated successfully!
-                    </motion.div>
-                  )} */}
 
                   {successMessage && (
                     <motion.div
@@ -177,24 +197,98 @@ export default function Generator_Step_5() {
                     </motion.div>
                   )}
 
-                  <motion.button
-                    onClick={handleGenerate}
-                    className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                    disabled={loading}
-                  >
-                    {loading ? "Generating..." : "Generate"}
-                  </motion.button>
+                  <div className="flex bg-inherit justify-evenly w-[600px]">
+                    <motion.button
+                      onClick={handleGenerate}
+                      className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                      disabled={loading}
+                    >
+                      {loading ? "Generating..." : "Generate"}
+                    </motion.button>
+
+                    {isGenerated &&
+                      <motion.button
+                        onClick={() => setModalOpen(true)}
+                        className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                      // disabled={loading}
+                      >
+                        QR code
+                      </motion.button>
+                    }
+  
+                    {isGenerated &&
+                    <motion.button
+                      onClick={copyURL}
+                      className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                      disabled={loading}
+                    >
+                      Copy Url
+                    </motion.button>}
+
+                    {isGenerated &&
+                      <motion.button
+                        onClick={downloadVideo}
+                        className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                      // disabled={loading}
+                      >
+                        Download
+                      </motion.button>
+                    }
+                  </div>
+
+                  {/* {isGenerated &&
+                    <div className="flex bg-inherit justify-evenly w-[300px]">
+                      <motion.button
+                        onClick={copyURL}
+                        className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                        disabled={loading}
+                      >
+                        Copy Url
+                      </motion.button>
+
+                      {isGenerated &&
+                        <motion.button
+                          onClick={downloadVideo}
+                          className="mt-5 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.5 }}
+                        // disabled={loading}
+                        >
+                          Download
+                        </motion.button>
+                      }
+                    </div>
+                  } */}
+
+
+                  {/* modal section */}
+                  <QRModal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+                    <h2 className="text-lg font-bold">QR code for video</h2>
+                    <QRCodeCanvas value={videoUrl} size={400} />
+                  </QRModal>
 
                   <Link
                     to="/"
-                    className={`mt-2 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${
-                      !isDataFetched
-                        ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-purple-700 hover:scale-105"
-                    }`}
+                    className={`mt-2 bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${!isDataFetched
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-purple-700 hover:scale-105"
+                      }`}
                     style={{ pointerEvents: !isDataFetched ? "none" : "auto" }}
                   >
                     Back to Home
