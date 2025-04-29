@@ -50,7 +50,7 @@ const getResourceType = (file) => {
     const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
     if (videoExtensions.includes(fileExtension)) return 'video';
-    if (audioExtensions.includes(fileExtension)) return 'audio';
+    if (audioExtensions.includes(fileExtension)) return 'video';
     if (imageExtensions.includes(fileExtension)) return 'image';
     return 'auto';
 };
