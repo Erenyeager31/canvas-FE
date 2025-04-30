@@ -372,7 +372,7 @@ const Generator_Step_1 = () => {
                   }}
                   className={`bg-[#6A3A9F] text-white rounded-lg py-2 px-4 hover:bg-purple-700 transition transition-transform transform hover:scale-105 ${isNextDisabled ? "opacity-50 cursor-not-allowed" : ""
                     }`}
-                  disabled={isNextDisabled}
+                  // disabled={isNextDisabled}
                 >
                   Next Step
                 </Link>
