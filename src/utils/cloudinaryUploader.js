@@ -3,12 +3,8 @@ import * as CryptoJS from 'crypto-js';
 const uploadFile = async (file, uploadPreset = 'canvas-upload') => {
     try {
         // const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-        // const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;
+        // const apiKey = import.meta.env.VITE_CLOUDINARY_API_KEY;7
         // const apiSecret = import.meta.env.VITE_CLOUDINARY_SECRET;
-
-        const cloudName = 'dqvp6ghno';
-        const apiKey = '997938952953569';
-        const apiSecret = 'EL2YesPvfWTe34FwFCVUIxmO8xg';
 
         const timestamp = Math.floor(Date.now() / 1000);
         const signatureParams = `timestamp=${timestamp}&upload_preset=${uploadPreset}${apiSecret}`;
